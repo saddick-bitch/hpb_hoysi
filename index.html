@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumple 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --lavender: #c3aee8;
+  --lavender-dark: #a68fd4;
+  --sky: #a8d4f0;
+  --sky-dark: #7db8e0;
+  --blush: #f0c6d8;
+  --cream: #faf7ff;
+  --white: #ffffff;
+  --text: #4a3a6a;
+  --text-light: #8a7aaa;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8e0f8 0%, #d0e8f8 50%, #e8d0f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.blob { position: fixed; border-radius: 50%; filter: blur(70px); opacity: 0.4; pointer-events: none; z-index: 0; }
+.blob1 { width: 320px; height: 320px; background: #c8b4f0; top: -100px; left: -80px; }
+.blob2 { width: 260px; height: 260px; background: #a8d4f0; bottom: -80px; right: -60px; }
+.blob3 { width: 200px; height: 200px; background: #f0c6e0; bottom: 15%; left: 5%; }
+
+.flowers-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.flower { position: absolute; opacity: 0.22; animation: floatUp linear infinite; }
+@keyframes floatUp {
+  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.22; }
+  92%  { opacity: 0.22; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ======================== PANTALLA 1 ======================== */
+#screen-sobre {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  animation: fadeUp 0.8s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.pretitle { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--text-light); text-align:center; }
+
+.sobre-btn {
+  width:280px; height:196px; position:relative; cursor:pointer;
+  -webkit-tap-highlight-color:transparent; user-select:none;
+  background:none; border:none; padding:0; transition:transform 0.18s;
+}
+.sobre-btn:active { transform:scale(0.95); }
+
+.s-body {
+  position:absolute; inset:0;
+  background:linear-gradient(155deg,#ddd0f4 0%,#c8b8ec 100%);
+  border-radius:12px;
+  box-shadow:0 18px 48px rgba(160,120,210,0.28),inset 0 1px 0 rgba(255,255,255,0.55);
+}
+.s-body::before {
+  content:''; position:absolute; inset:9px;
+  border:1.5px solid rgba(255,255,255,0.45); border-radius:8px; pointer-events:none;
+}
+.s-deco { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.8rem; opacity:0.25; letter-spacing:10px; pointer-events:none; }
+.s-flap-top  { position:absolute; top:0;left:0;right:0; height:98px; background:#baaae0; clip-path:polygon(0 0,100% 0,50% 100%); z-index:3; border-radius:12px 12px 0 0; }
+.s-flap-left { position:absolute; top:0;left:0;bottom:0; width:140px; background:#c8b6ea; clip-path:polygon(0 0,100% 50%,0 100%); z-index:2; }
+.s-flap-right{ position:absolute; top:0;right:0;bottom:0; width:140px; background:#c0ace2; clip-path:polygon(100% 0,0 50%,100% 100%); z-index:2; }
+.s-flap-bottom{ position:absolute; bottom:0;left:0;right:0; height:108px; background:#c8b8e8; clip-path:polygon(0 100%,50% 0,100% 100%); z-index:2; border-radius:0 0 12px 12px; }
+.s-seal { position:absolute; top:50%;left:50%; transform:translate(-50%,-50%); width:50px;height:50px; background:linear-gradient(135deg,#f0c6e0,#c8b4f0); border-radius:50%; z-index:4; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 2px 14px rgba(180,140,230,0.45),0 0 0 3px rgba(255,255,255,0.65); }
+.hint { font-size:0.76rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--lavender-dark); opacity:0.75; }
+
+/* ======================== PANTALLA 2 ======================== */
+#screen-tarjeta {
+  display:none; position:relative; z-index:10;
+  width:min(390px,92vw);
+  animation:popIn 0.5s cubic-bezier(0.34,1.5,0.64,1) both;
+}
+@keyframes popIn {
+  from { opacity:0; transform:scale(0.7) translateY(40px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+
+.card { background:var(--white); border-radius:22px; overflow:hidden; box-shadow:0 28px 70px rgba(160,120,220,0.2),0 8px 24px rgba(160,120,220,0.1); }
+.card-head { background:linear-gradient(130deg,#d4c0f2 0%,#b8d8f2 100%); padding:30px 24px 36px; text-align:center; position:relative; overflow:hidden; }
+.card-head::after { content:''; position:absolute; bottom:-22px;left:-20px;right:-20px; height:44px; background:var(--white); border-radius:50%; }
+.card-emoji-row { font-size:1.5rem; letter-spacing:5px; margin-bottom:10px; }
+.card-h1 { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:600; color:var(--text); line-height:1.1; }
+.card-h2 { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--text-light); margin-top:5px; }
+
+.card-body { padding:28px 22px 22px; }
+.card-msg { text-align:center; margin-bottom:20px; }
+.card-msg p { font-size:0.9rem; color:var(--text); line-height:1.75; }
+.hl { color:var(--lavender-dark); font-weight:700; }
+
+.coupon { background:linear-gradient(135deg,#f6f0ff,#f0f6ff); border:2px dashed var(--lavender); border-radius:14px; padding:18px 16px; position:relative; margin-bottom:18px; }
+.coupon::before,.coupon::after { content:''; position:absolute; top:50%;transform:translateY(-50%); width:18px;height:18px; background:var(--white); border-radius:50%; border:2px dashed var(--lavender); }
+.coupon::before { left:-11px; }
+.coupon::after  { right:-11px; }
+.coupon-chip { position:absolute; top:-11px;right:16px; background:linear-gradient(90deg,var(--lavender-dark),var(--sky-dark)); color:#fff; font-size:0.58rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; }
+.c-header { display:flex; align-items:center; gap:9px; margin-bottom:10px; }
+.c-icon { font-size:1.5rem; }
+.c-name { font-weight:700; font-size:0.88rem; color:var(--text); line-height:1.3; }
+.c-name small { display:block; font-weight:400; font-size:0.72rem; color:var(--text-light); }
+.c-discount { display:flex; align-items:flex-end; gap:8px; margin-bottom:12px; }
+.big-pct { font-family:'Cormorant Garamond',serif; font-size:3.4rem; font-weight:600; color:var(--lavender-dark); line-height:1; }
+.c-desc { padding-bottom:4px; font-size:0.76rem; color:var(--text-light); line-height:1.5; }
+.c-desc strong { display:block; color:var(--text); }
+.c-terms { border-top:1px solid rgba(180,150,235,0.2); padding-top:10px; list-style:none; font-size:0.68rem; color:var(--text-light); line-height:2; }
+.c-terms li { padding-left:14px; position:relative; }
+.c-terms li::before { content:'✿'; position:absolute; left:0; color:var(--lavender); font-size:0.6rem; }
+
+.btn-cerrar { width:100%; padding:13px; background:linear-gradient(135deg,var(--lavender-dark),var(--sky-dark)); color:#fff; border:none; border-radius:12px; font-family:'Nunito',sans-serif; font-size:0.88rem; font-weight:700; letter-spacing:0.04em; cursor:pointer; transition:opacity 0.2s,transform 0.15s; -webkit-tap-highlight-color:transparent; }
+.btn-cerrar:active { opacity:0.85; transform:scale(0.98); }
+
+/* ======================== DENY BUTTON ======================== */
+.btn-denegar {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: transparent;
+  color: #c4899a;
+  border: 1.5px dashed #e8b4c4;
+  border-radius: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn-denegar:hover { background: #fff5f7; }
+
+#deny-wrapper {
+  transition: left 0.35s cubic-bezier(0.34,1.5,0.64,1), top 0.35s cubic-bezier(0.34,1.5,0.64,1);
+}
+
+/* ======================== MODALS ======================== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(50,30,90,0.42);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  animation: mfadeIn 0.2s ease both;
+}
+@keyframes mfadeIn { from{opacity:0} to{opacity:1} }
+.modal-overlay.hidden { display: none; }
+
+.modal-box {
+  background: #fff;
+  border-radius: 22px;
+  padding: 28px 22px 24px;
+  width: min(340px, 90vw);
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(130,90,210,0.22);
+  animation: popIn 0.45s cubic-bezier(0.34,1.5,0.64,1) both;
+}
+
+.modal-emoji { font-size: 2.4rem; margin-bottom: 8px; }
+.modal-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--text); margin-bottom:6px; line-height:1.25; }
+.modal-sub { font-size:0.8rem; color:var(--text-light); margin-bottom:20px; line-height:1.65; min-height: 42px; }
+.modal-btns { display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap: wrap; }
+
+.btn-quedarse {
+  padding: 11px 20px;
+  background: linear-gradient(135deg, var(--lavender-dark), var(--sky-dark));
+  color: #fff; border: none; border-radius: 10px;
+  font-family:'Nunito',sans-serif; font-size:0.85rem; font-weight:700;
+  cursor: pointer; transition: transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-quedarse:active { transform: scale(0.97); }
+
+#btn-si {
+  padding: 10px 18px;
+  background: transparent;
+  color: #c4899a;
+  border: 1.5px dashed #e8b4c4;
+  border-radius: 10px;
+  font-family:'Nunito',sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34,1.5,0.64,1);
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ======================== CAPTCHA ======================== */
+.captcha-header {
+  display: flex; flex-direction: column; align-items: flex-start;
+  background: linear-gradient(135deg, #f8f4ff, #f0f8ff);
+  border: 1.5px solid #ddd0f4;
+  border-radius: 14px 14px 0 0;
+  padding: 10px 14px 8px;
+  margin-bottom: 0;
+  border-bottom: none;
+  text-align: left;
+}
+.captcha-header span { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+.captcha-header small { font-size: 0.58rem; color: var(--text-light); margin-top: 2px; }
+
+.captcha-body {
+  background: #fafaff;
+  border: 1.5px solid #ddd0f4;
+  border-radius: 0 0 14px 14px;
+  padding: 14px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.captcha-q {
+  font-size: 0.78rem; color: var(--text); line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.emoji-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+  margin-bottom: 10px;
+}
+.emoji-cell {
+  aspect-ratio: 1;
+  background: #fff;
+  border: 2px solid #ddd0f4;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  position: relative;
+}
+.emoji-cell:hover { background: #f0e8ff; border-color: var(--lavender); }
+.emoji-cell.selected { background: #e0d0f8; border-color: var(--lavender-dark); }
+.emoji-cell.selected::after { content: '✓'; position: absolute; top: 2px; right: 4px; font-size: 0.55rem; color: var(--lavender-dark); font-weight: 900; }
+
+.captcha-error {
+  font-size: 0.7rem; color: #d45060; font-weight: 700;
+  min-height: 18px; margin-top: 6px; line-height: 1.4;
+}
+
+.captcha-input {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid #ddd0f4; border-radius: 8px;
+  font-family: 'Nunito', sans-serif; font-size: 0.85rem;
+  color: var(--text); outline: none;
+}
+.captcha-input:focus { border-color: var(--lavender-dark); }
+
+.btn-captcha {
+  width: 100%; padding: 11px;
+  background: linear-gradient(135deg, var(--lavender-dark), var(--sky-dark));
+  color: #fff; border: none; border-radius: 10px;
+  font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; margin-top: 10px;
+  transition: transform 0.15s;
+}
+.btn-captcha:active { transform: scale(0.97); }
+
+/* Distorted text */
+.distorted-display {
+  font-size: 2rem; font-family: monospace; font-weight: 900;
+  letter-spacing: 6px; padding: 14px 10px;
+  background: repeating-linear-gradient(45deg, #ede0ff, #ede0ff 4px, #ddd0f4 4px, #ddd0f4 9px);
+  border-radius: 8px; margin-bottom: 10px;
+  user-select: none; text-align: center;
+  min-height: 62px;
+}
+
+/* Progress bar for captcha completing */
+.captcha-progress {
+  height: 6px; background: #ede0ff; border-radius: 10px;
+  overflow: hidden; margin-top: 8px;
+}
+.captcha-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lavender-dark), var(--sky-dark));
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.8s ease;
+}
+
+/* ======================== SUCCESS MODAL ======================== */
+.success-box {
+  background: linear-gradient(135deg, #f8f0ff, #f0f8ff);
+  border-radius: 22px;
+  padding: 32px 24px 28px;
+  width: min(340px, 90vw);
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(130,90,210,0.22);
+  animation: popIn 0.5s cubic-bezier(0.34,1.5,0.64,1) both;
+}
+.success-emoji-big { font-size: 3.5rem; margin-bottom: 10px; }
+.success-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:600; color:var(--text); margin-bottom:8px; }
+.success-msg { font-size:0.82rem; color:var(--text-light); line-height:1.75; margin-bottom:20px; }
+.success-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--lavender-dark), var(--sky-dark));
+  color: #fff; font-size:0.68rem; font-weight:700; letter-spacing:0.1em;
+  text-transform: uppercase; padding: 4px 14px; border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+/* ======================== CONFETTI ======================== */
+.confetti-dot { position:fixed; pointer-events:none; z-index:999; animation:cfall linear forwards; }
+@keyframes cfall {
+  0%   { transform:translateY(-10px) rotate(0deg);   opacity:1; }
+  100% { transform:translateY(108vh)  rotate(600deg); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<div class="flowers-bg" id="flowersBg"></div>
+
+<!-- PANTALLA 1 -->
+<div id="screen-sobre">
+  <p class="pretitle">Para ti, con todo el cariño 🌸</p>
+  <button class="sobre-btn" onclick="abrirSobre()" aria-label="Abrir sobre de cumpleaños">
+    <div class="s-body"><div class="s-deco">🌸 🪻 🌸</div></div>
+    <div class="s-flap-bottom"></div>
+    <div class="s-flap-left"></div>
+    <div class="s-flap-right"></div>
+    <div class="s-flap-top"></div>
+    <div class="s-seal">🌷</div>
+  </button>
+  <p class="hint">— toca el sobre —</p>
+</div>
+
+<!-- PANTALLA 2 -->
+<div id="screen-tarjeta">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-emoji-row">🌸 🪻 💙 🪻 🌸</div>
+      <div class="card-h1">¡Feliz Cumpleaños!</div>
+      <div class="card-h2">con todo el cariño del mundo</div>
+    </div>
+    <div class="card-body">
+      <div class="card-msg">
+        <p>
+          Eres un co-escritor <span class="hl">increíble</span> y te mereces
+          el mejor regalo del mundo. Y yo, siendo la amiga
+          <span class="hl">tan generosa</span> que soy, te he preparado este cupón súper especial para que lo canjees cuando quieras. ¡Espero que te guste!
+        </p>
+      </div>
+
+      <div class="coupon">
+        <span class="coupon-chip">✦ regalo de cumpleaños ✦</span>
+        <div class="c-header">
+          <span class="c-icon">🪻</span>
+          <div class="c-name">
+            Clases de HTMl + CSS
+            <small>impartidas por tu no-profe favorita</small>
+          </div>
+        </div>
+        <div class="c-discount">
+          <span class="big-pct">100%</span>
+          <div class="c-desc">de descuento<br><strong>en todas tus clases</strong></div>
+        </div>
+        <ul class="c-terms">
+          <li>Válido por: Hasta que me muera</li>
+          <li>Incluye: Introducción, corrección de código y regaños gratis</li>
+          <li>⚠️ NO reembolsable bajo ninguna circunstancia</li>
+          <li>⚠️ NO transferible · NO hay excusas · NO hay salida</li>
+          <li>Política de cancelación: no existe. ✨</li>
+        </ul>
+      </div>
+
+      <button class="btn-cerrar" onclick="cerrar()">🌸 ¡Muchas gracias! · 🌸</button>
+
+      <!-- DENY BUTTON -->
+      <div id="deny-wrapper">
+        <button class="btn-denegar" id="btn-denegar" onclick="intentarDenegar()">
+          🚫 No, gracias · Denegar oferta
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 1: ¿De verdad rechazar? -->
+<div id="modal-rechazar" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-emoji" id="rechazar-emoji"></div>
+    <div class="modal-title">¿De verdad quieres<br>rechazar esta oferta?</div>
+    <div class="modal-sub" id="rechazar-sub">¿Estás segur0? Esta es una oferta única en la vida.</div>
+    <div class="modal-btns">
+      <button class="btn-quedarse" onclick="noRechazar()">💜 No, me quedo</button>
+      <button id="btn-si" onclick="clickSi()">Sí, rechazar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: CAPTCHA -->
+<div id="modal-captcha" class="modal-overlay hidden">
+  <div class="modal-box" style="padding: 24px 20px 20px;">
+    <div class="captcha-header">
+      <span>🤖 Verificación de Seguridad</span>
+      <small>Powered by reCAPTCHA Ultra Pro Max Plus™ · No copyright infringement intended</small>
+    </div>
+
+    <!-- PHASE 1: emoji grid -->
+    <div id="captcha-p1" class="captcha-body">
+      <div class="captcha-q">
+        Selecciona <strong>TODOS</strong> los cuadros que muestran<br>
+        un gato montando un unicornio en Marte
+      </div>
+      <div class="emoji-grid" id="emoji-grid"></div>
+      <div class="captcha-error" id="error-p1"></div>
+      <button class="btn-captcha" onclick="verificarP1()">Verificar →</button>
+    </div>
+
+    <!-- PHASE 2: impossible question -->
+    <div id="captcha-p2" class="captcha-body" style="display:none;">
+      <div class="captcha-q">
+        Para continuar, responde con exactitud:<br>
+        <strong>¿Cuántos ángeles pueden bailar en la punta de una aguja?</strong><br>
+        <small style="color:var(--text-light); font-size:0.68rem;">(respuesta exacta requerida · no hay pistas)</small>
+      </div>
+      <input type="text" class="captcha-input" id="angel-input" placeholder="Tu respuesta aquí...">
+      <div class="captcha-error" id="error-p2"></div>
+      <button class="btn-captcha" onclick="verificarP2()">Verificar →</button>
+    </div>
+
+    <!-- PHASE 3: distorted text -->
+    <div id="captcha-p3" class="captcha-body" style="display:none;">
+      <div class="captcha-q">
+        Escribe <strong>exactamente</strong> los caracteres que ves en la imagen:
+      </div>
+      <div class="distorted-display" id="distorted-display"></div>
+      <input type="text" class="captcha-input" id="distorted-input" placeholder="Escribe los caracteres...">
+      <div class="captcha-error" id="error-p3"></div>
+      <div class="captcha-progress" id="progress-bar-wrap" style="display:none;">
+        <div class="captcha-progress-bar" id="progress-bar"></div>
+      </div>
+      <button class="btn-captcha" id="btn-p3" onclick="verificarP3()">Verificar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: Éxito -->
+<div id="modal-exito" class="modal-overlay hidden">
+  <div class="success-box">
+    <div class="success-emoji-big">🎉🪻🎉</div>
+    <div class="success-title">¡Felicidades!</div>
+    <div class="success-badge">✦ inscripción confirmada ✦</div>
+    <div class="success-msg">
+      Te has inscrito exitosamente a las<br>
+      <strong>Clases de HTML + CSS.</strong><br><br>
+      El sistema te tiene registrado.<br>
+      No hay vuelta atrás. El universo lo sabe.<br>
+      <strong>¡Nos vemos en claseEeEeEEe! ✨</strong>
+    </div>
+    <button class="btn-quedarse" onclick="cerrarTodo()" style="width:100%; padding:13px;">
+      🌸 Okay, me rindo 🌸
+    </button>
+  </div>
+</div>
+
+<script>
+  
+  const emojis = ['🌸','🪻','💐','🌷','✨','🫧','🌼','💜','🩵'];
+  const bg = document.getElementById('flowersBg');
+  for (let i = 0; i < 22; i++) {
+    const el = document.createElement('div');
+    el.className = 'flower';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.cssText = `left:${Math.random()*100}vw;font-size:${0.8+Math.random()*1.3}rem;animation-duration:${14+Math.random()*18}s;animation-delay:${Math.random()*16}s;`;
+    bg.appendChild(el);
+  }
+
+  // pantalla lol
+  function abrirSobre() {
+    document.getElementById('screen-sobre').style.display = 'none';
+    document.getElementById('screen-tarjeta').style.display = 'block';
+    lanzarConfetti(110);
+  }
+  function cerrar() {
+    document.getElementById('screen-tarjeta').style.display = 'none';
+    document.getElementById('screen-sobre').style.display = 'flex';
+    // Reset deny button back to card if it was moved
+    resetDenyBtn();
+  }
+
+  /* ===== CONFETTI ===== */
+  function lanzarConfetti(n) {
+    const colors = ['#c3aee8','#a8d4f0','#f0c6d8','#b8e8d8','#d4b8f0','#90c8e8','#f8d0e8','#ffffff','#e0d0f8'];
+    for (let i = 0; i < n; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-dot';
+        const w = 6 + Math.random() * 8;
+        const isRound = Math.random() > 0.5;
+        c.style.cssText = `left:${Math.random()*100}vw;top:0;width:${w}px;height:${isRound?w:w*(0.4+Math.random()*0.8)}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${isRound?'50%':'2px'};animation-duration:${2.5+Math.random()*2.5}s;animation-delay:${Math.random()*0.6}s;`;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 6000);
+      }, i * 22);
+    }
+  }
+
+  /* ===== DENY BUTTON LOGIC ===== */
+  let denyMoves = 0;
+  const MAX_MOVES = 4;
+  let denyFloating = false;
+
+  function intentarDenegar() {
+    denyMoves++;
+    const wrapper = document.getElementById('deny-wrapper');
+
+    if (!denyFloating) {
+      // Grab current position and make it float
+      const rect = wrapper.getBoundingClientRect();
+      wrapper.style.position = 'fixed';
+      wrapper.style.left = rect.left + 'px';
+      wrapper.style.top  = rect.top  + 'px';
+      wrapper.style.width = rect.width + 'px';
+      wrapper.style.margin = '0';
+      wrapper.style.zIndex = '500';
+      document.body.appendChild(wrapper);
+      denyFloating = true;
+      // Trigger move immediately after reflow
+      requestAnimationFrame(() => requestAnimationFrame(() => moverDeny()));
+    } else if (denyMoves <= MAX_MOVES) {
+      moverDeny();
+    } else {
+      // Show modal
+      wrapper.style.display = 'none';
+      document.getElementById('modal-rechazar').classList.remove('hidden');
+    }
+  }
+
+  function moverDeny() {
+    const wrapper = document.getElementById('deny-wrapper');
+    const bw = wrapper.offsetWidth  || 200;
+    const bh = wrapper.offsetHeight || 44;
+    const margin = 16;
+    const x = margin + Math.random() * (window.innerWidth  - bw - margin * 2);
+    const y = margin + Math.random() * (window.innerHeight - bh - margin * 2);
+    wrapper.style.left = x + 'px';
+    wrapper.style.top  = y + 'px';
+  }
+
+  function resetDenyBtn() {
+    denyMoves = 0;
+    denyFloating = false;
+    siClicks = 0;
+    const wrapper = document.getElementById('deny-wrapper');
+    wrapper.style.cssText = '';
+    wrapper.style.display = '';
+    document.getElementById('btn-si').style.cssText = '';
+    document.getElementById('btn-si').textContent = 'Sí, rechazar';
+    // Put it back inside card body
+    const cardBody = document.querySelector('.card-body');
+    if (cardBody && !cardBody.contains(wrapper)) {
+      cardBody.appendChild(wrapper);
+    }
+  }
+
+  /* ===== MODAL RECHAZAR: Sí shrinking button ===== */
+  let siClicks = 0;
+  const siData = [
+    { size: '0.82rem', pad: '10px 18px', text: 'Sí, rechazar',    sub: '¿Estás segura/o? Esta es una oferta única en la vida.',       emoji: '🤨' },
+    { size: '0.72rem', pad: '8px 14px',  text: '¿Sí, de verdad?', sub: '¡Espera, espera! Piénsalo muy bien...',                        emoji: '😟' },
+    { size: '0.60rem', pad: '6px 11px',  text: 'Sí... supongo',   sub: 'Okay... ¿pero estás SEGURA segura?',                           emoji: '😰' },
+    { size: '0.46rem', pad: '5px 8px',   text: 'ok... sí',        sub: 'Eres increíblemente persistente. Una última cosita...',        emoji: '😱' },
+    { size: '0.32rem', pad: '3px 6px',   text: 'sí...',           sub: 'Bien. Si insistes... el sistema necesita una verificación 😈', emoji: '☠️' },
+  ];
+
+  function clickSi() {
+    siClicks++;
+    if (siClicks >= siData.length) {
+      // Launch captcha
+      document.getElementById('modal-rechazar').classList.add('hidden');
+      showCaptcha();
+      return;
+    }
+    const d = siData[siClicks];
+    const btn = document.getElementById('btn-si');
+    btn.style.fontSize = d.size;
+    btn.style.padding  = d.pad;
+    btn.textContent    = d.text;
+    // Random micro-jiggle
+    const dx = (Math.random() - 0.5) * 60;
+    const dy = (Math.random() - 0.5) * 40;
+    btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    document.getElementById('rechazar-sub').textContent   = d.sub;
+    document.getElementById('rechazar-emoji').textContent = d.emoji;
+  }
+
+  function noRechazar() {
+    document.getElementById('modal-rechazar').classList.add('hidden');
+  }
+
+  /* ===== CAPTCHA ===== */
+  const emojiPool = [
+    ['🍕','🐶','🌮','🎸','🦆','🌵','🐙','🎯','🦋'],
+    ['🍔','🐸','🌯','🎺','🦜','🌴','🦑','🎪','🐝'],
+    ['🍣','🐺','🥗','🎻','🦚','🌾','🦞','🎠','🦗'],
+    ['🍩','🐻','🥪','🥁','🦩','🍄','🦀','🎡','🦎'],
+  ];
+  let p1Fails = 0;
+  let p2Fails = 0;
+  let p3Fails = 0;
+
+  const p2Errors = [
+    'Incorrecto. La respuesta correcta es un número primo que aún no ha sido descubierto.',
+    'Tampoco. Los ángeles se han negado a comentar al respecto.',
+    '¡Casi! Pero los ángeles han presentado una queja formal por la pregunta.',
+    'El sistema ha consultado con tres teólogos y ninguno sabe tampoco.',
+  ];
+
+  const p3Errors = [
+    'Incorrecto. ¿Tienes los lentes puestos?',
+    '¡Tan cerca! Y sin embargo, tan lejos',
+    'El sistema sospecha que eres un bot muy confundido',
+  ];
+
+  function showCaptcha() {
+    buildEmojiGrid();
+    document.getElementById('modal-captcha').classList.remove('hidden');
+  }
+
+  function buildEmojiGrid() {
+    const grid = document.getElementById('emoji-grid');
+    grid.innerHTML = '';
+    const set = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+    // Shuffle
+    const shuffled = set.slice().sort(() => Math.random() - 0.5);
+    shuffled.forEach(em => {
+      const cell = document.createElement('div');
+      cell.className = 'emoji-cell';
+      cell.textContent = em;
+      cell.onclick = () => cell.classList.toggle('selected');
+      grid.appendChild(cell);
+    });
+  }
+
+  function verificarP1() {
+    p1Fails++;
+    const errorEl = document.getElementById('error-p1');
+    const p1Msgs = [
+      'Incorrecto. Los gatos en Marte son muy tímidos y nunca aparecen así.',
+      '¡No! ¿Acaso ves un unicornio? Yo tampoco.',
+      'El sistema ha detectado un intento de trampa astoriano.',
+    ];
+    if (p1Fails < 3) {
+      errorEl.textContent = p1Msgs[p1Fails - 1];
+      // Reshuffle grid
+      document.querySelectorAll('.emoji-cell').forEach(c => c.classList.remove('selected'));
+      setTimeout(() => buildEmojiGrid(), 400);
+    } else {
+      // Advance to phase 2
+      errorEl.textContent = '';
+      document.getElementById('captcha-p1').style.display = 'none';
+      document.getElementById('captcha-p2').style.display = 'block';
+    }
+  }
+
+  function verificarP2() {
+    p2Fails++;
+    const errorEl = document.getElementById('error-p2');
+    document.getElementById('angel-input').value = '';
+    if (p2Fails < 4) {
+      errorEl.textContent = p2Errors[p2Fails - 1];
+    } else {
+      // Advance to phase 3
+      errorEl.textContent = '';
+      document.getElementById('captcha-p2').style.display = 'none';
+      document.getElementById('captcha-p3').style.display = 'block';
+      generateDistortedText();
+    }
+  }
+
+  function generateDistortedText() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789@#$%&';
+    const word = Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    const container = document.getElementById('distorted-display');
+    container.innerHTML = '';
+    const colors = ['#7748c4','#4890d0','#c44870','#48c490','#c49048','#7048c4'];
+    word.split('').forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.textContent = ch;
+      const rotate   = (Math.random() - 0.5) * 50;
+      const skewX    = (Math.random() - 0.5) * 25;
+      const skewY    = (Math.random() - 0.5) * 10;
+      const transY   = (Math.random() - 0.5) * 12;
+      const scale    = 0.7 + Math.random() * 0.6;
+      const blur     = Math.random() > 0.6 ? `filter:blur(${1+Math.random()*1.5}px);` : '';
+      span.style.cssText = `
+        display:inline-block;
+        transform:rotate(${rotate}deg) skewX(${skewX}deg) skewY(${skewY}deg) translateY(${transY}px) scale(${scale});
+        color:${colors[i % colors.length]};
+        text-shadow:2px 2px 0 rgba(0,0,0,0.15);
+        ${blur}
+      `;
+      container.appendChild(span);
+    });
+  }
+
+  function verificarP3() {
+    p3Fails++;
+    const errorEl = document.getElementById('error-p3');
+    document.getElementById('distorted-input').value = '';
+
+    if (p3Fails < 3) {
+      errorEl.textContent = p3Errors[p3Fails - 1];
+      // Regenerate distorted text
+      setTimeout(() => generateDistortedText(), 300);
+    } else {
+      // "Miraculous" success
+      errorEl.textContent = '';
+      document.getElementById('btn-p3').disabled = true;
+      document.getElementById('btn-p3').textContent = 'Verificando...';
+      document.getElementById('progress-bar-wrap').style.display = 'block';
+
+      // Animate progress bar slowly
+      const bar = document.getElementById('progress-bar');
+      const stages = [
+        { w: '20%', delay: 300 },
+        { w: '45%', delay: 900 },
+        { w: '67%', delay: 1600 },
+        { w: '89%', delay: 2400 },
+        { w: '100%', delay: 3000 },
+      ];
+      stages.forEach(s => {
+        setTimeout(() => { bar.style.width = s.w; }, s.delay);
+      });
+
+      setTimeout(() => {
+        errorEl.style.color = '#48a870';
+        errorEl.textContent = '✓ Verificación exitosa (por compasión del sistema)';
+      }, 3200);
+
+      setTimeout(() => {
+        document.getElementById('modal-captcha').classList.add('hidden');
+        document.getElementById('modal-exito').classList.remove('hidden');
+        lanzarConfetti(160);
+      }, 4200);
+    }
+  }
+
+  function cerrarTodo() {
+    document.getElementById('modal-exito').classList.add('hidden');
+    document.getElementById('screen-tarjeta').style.display = 'none';
+    document.getElementById('screen-sobre').style.display = 'flex';
+    resetDenyBtn();
+    // Reset captcha state
+    p1Fails = 0; p2Fails = 0; p3Fails = 0;
+    document.getElementById('captcha-p1').style.display = 'block';
+    document.getElementById('captcha-p2').style.display = 'none';
+    document.getElementById('captcha-p3').style.display = 'none';
+    document.getElementById('progress-bar-wrap').style.display = 'none';
+    document.getElementById('progress-bar').style.width = '0%';
+    document.getElementById('btn-p3').disabled = false;
+    document.getElementById('btn-p3').textContent = 'Verificar →';
+    document.getElementById('error-p3').style.color = '#d45060';
+    document.getElementById('error-p1').textContent = '';
+    document.getElementById('error-p2').textContent = '';
+    document.getElementById('error-p3').textContent = '';
+    document.getElementById('angel-input').value = '';
+    document.getElementById('distorted-input').value = '';
+    // Reset rechazar modal
+    const d0 = siData[0];
+    const btn = document.getElementById('btn-si');
+    btn.style.fontSize = d0.size; btn.style.padding = d0.pad;
+    btn.style.transform = ''; btn.textContent = d0.text;
+    document.getElementById('rechazar-sub').textContent   = d0.sub;
+    document.getElementById('rechazar-emoji').textContent = d0.emoji;
+  }
+</script>
+</body>
+</html>
